@@ -1,9 +1,11 @@
-import React, {useEffect,useState} from 'react'
-import { fetchData } from '../../Config/Fetch';
+import React, {useEffect,useState,useContext} from 'react';
 import Layout from '../Layout';
+import { CRMCarContext } from '../../UseContext/CartContext';
+import { fetchData } from '../../Config/Fetch';
 const Products = () => {
 
   const [products, setProducts] = useState([]);
+  const { addCart,setProductCart } = useContext(CRMCarContext);
 
   useEffect(() => {
     let callApi = async () => {
@@ -12,6 +14,10 @@ const Products = () => {
     };
     callApi();
   }, []);
+
+  const addProdCart = () => {
+    setProductCart(addCart+1)
+  }
 
   return (
     <Layout>
@@ -25,6 +31,7 @@ const Products = () => {
                 </div>
                 <div className="card-body">
                   <p>{pr.description}</p>
+                  <button onClick={addProdCart}>Add Cart</button>
                 </div>
               </div>
             ))
